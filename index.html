@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJdGbpQ9pmc58o" />
+<head><meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJdGbpQ9pmc58o" />
 <title>PharmaCalc | Pharmacy Learning Hub</title>
 
 <style>
@@ -217,6 +216,7 @@ button:focus, input:focus, select:focus {
 </footer>
 
 <script>
+
 
 // ===============================
 // 50 MEDICINES DATABASE
@@ -865,7 +865,71 @@ document.body.classList.add("dark");
 
 showHome();
 
-</script>
+function showAlligation() {
+    document.getElementById("content").innerHTML = `
+        <h2>⚖️ Alligation Calculator</h2>
+        <p>Calculate the ratio of two different strengths.</p>
+
+        <label>Higher Strength (%)</label>
+        <input type="number" id="highStrength" placeholder="Example: 20">
+
+        <label>Lower Strength (%)</label>
+        <input type="number" id="lowStrength" placeholder="Example: 5">
+
+        <label>Required Strength (%)</label>
+        <input type="number" id="targetStrength" placeholder="Example: 10">
+
+        <label>Total Quantity (g or ml)</label>
+        <input type="number" id="totalQuantity" placeholder="Example: 100">
+
+        <button onclick="calculateAlligation()">
+            Calculate
+        </button>
+
+        <div id="alligationResult"></div>
+    `;
+}
+
+function calculateAlligation() {
+    let high = Number(document.getElementById("highStrength").value);
+    let low = Number(document.getElementById("lowStrength").value);
+    let target = Number(document.getElementById("targetStrength").value);
+    let total = Number(document.getElementById("totalQuantity").value);
+
+    let result = document.getElementById("alligationResult");
+
+    if (
+        !document.getElementById("highStrength").value ||
+        !document.getElementById("lowStrength").value ||
+        !document.getElementById("targetStrength").value ||
+        !document.getElementById("totalQuantity").value ||
+        high <= low ||
+        target <= low ||
+        target >= high ||
+        total <= 0
+    ) {
+        result.innerHTML = "<p style='color:red'>Please enter valid values. Required strength must be between higher and lower strength.</p>";
+        return;
+    }
+
+    let highParts = target - low;
+    let lowParts = high - target;
+
+    let totalParts = highParts + lowParts;
+
+    let highQuantity = (highParts / totalParts) * total;
+    let lowQuantity = (lowParts / totalParts) * total;
+
+    result.innerHTML = `
+        <h3>Calculation Result</h3>
+        <p>Higher Strength Parts: ${highParts}</p>
+        <p>Lower Strength Parts: ${lowParts}</p>
+        <h3>Ratio = ${highParts} : ${lowParts}</h3>
+        <p>Higher Strength Quantity: ${highQuantity.toFixed(2)}</p>
+        <p>Lower Strength Quantity: ${lowQuantity.toFixed(2)}</p>
+        <h3>Total Quantity: ${total}</h3>
+    `;
+}</script>
 
 </body>
 </html>

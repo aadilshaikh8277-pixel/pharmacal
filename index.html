@@ -82,8 +82,10 @@ body.dark th{background:#263b53;color:#fff}body.dark .result{background:#233c55}
     <button onclick="showAlligation()">⚖️ Alligation Calculator</button>
     <div class="sidebar-title">PHARMACY TOOLS</div>
     <button onclick="showDrugInfo()">💊 Drug Information</button>
-    <button onclick="showHistory()">🕘 Calculation History</button>
-    <button onclick="showAbout()">ℹ️ About PharmaCalc</button>
+    
+<button onclick="showHistory()">🕘 Calculation History</button>
+<button onclick="showAI()">🤖 AI Pharmacy Assistant</button>
+<button onclick="showAbout()">ℹ️ About PharmaCalc</button>
   </aside>
 
   <main class="main" id="content"></main>
@@ -171,7 +173,79 @@ function showAbout(){setActive("About");document.getElementById("content").inner
 function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("pharmaCalcDark",document.body.classList.contains("dark")?"yes":"no")}
 if(localStorage.getItem("pharmaCalcDark")==="yes")document.body.classList.add("dark");
 showHome();
-</script>
+function showAI() {
+    document.getElementById("content").innerHTML = `
+        <h2>🤖 AI Pharmacy Assistant</h2>
+        <p>Welcome to PharmaCalc Pharmacy Study Assistant!</p>
+
+        <div style="margin-top:20px;">
+            <input type="text" id="aiQuestion"
+            placeholder="Ask a pharmacy question..."
+            style="width:70%; padding:12px;">
+
+            <button onclick="askAI()">Ask Question</button>
+        </div>
+
+        <div id="aiAnswer" style="margin-top:20px;"></div>
+    `;
+}
+
+function askAI() {
+    let question = document.getElementById("aiQuestion").value.trim();
+    let answer = document.getElementById("aiAnswer");
+
+    if (question === "") {
+        answer.innerHTML = "Please enter a question.";
+        return;
+    }
+
+    let q = question.toLowerCase();
+
+    if (q.includes("paracetamol")) {
+        answer.innerHTML = "<h3>Paracetamol</h3><p>Paracetamol is an analgesic and antipyretic drug. It reduces pain and fever. It mainly acts by inhibiting prostaglandin synthesis in the central nervous system.</p>";
+    }
+    else if (q.includes("antibiotic")) {
+        answer.innerHTML = "<h3>Antibiotics</h3><p>Antibiotics are medicines used to treat bacterial infections. They act by killing bacteria or inhibiting their growth.</p>";
+    }
+    else if (q.includes("bmi")) {
+        answer.innerHTML = "<h3>BMI</h3><p>BMI = Weight (kg) / Height (m)². It is used to assess body weight relative to height.</p>";
+    }
+    else if (q.includes("aspirin")) {
+        answer.innerHTML = "<h3>Aspirin</h3><p>Aspirin is an NSAID. It inhibits cyclooxygenase (COX) enzymes and reduces prostaglandin synthesis. It also inhibits platelet aggregation.</p>";
+    }
+   else if (q.includes("ibuprofen")) {
+    answer.innerHTML = "<h3>Ibuprofen</h3><p>Ibuprofen is an NSAID. It inhibits COX enzymes and reduces pain, inflammation and fever.</p>";
+}
+else if (q.includes("amoxicillin")) {
+    answer.innerHTML = "<h3>Amoxicillin</h3><p>Amoxicillin is a beta-lactam antibiotic. It inhibits bacterial cell wall synthesis.</p>";
+}
+else if (q.includes("metformin")) {
+    answer.innerHTML = "<h3>Metformin</h3><p>Metformin is an antidiabetic drug. It mainly reduces glucose production in the liver.</p>";
+}
+else if (q.includes("omeprazole")) {
+    answer.innerHTML = "<h3>Omeprazole</h3><p>Omeprazole is a proton pump inhibitor (PPI). It reduces gastric acid secretion.</p>";
+}
+else if (q.includes("cetirizine")) {
+    answer.innerHTML = "<h3>Cetirizine</h3><p>Cetirizine is an antihistamine used to relieve allergy symptoms.</p>";
+}
+else if (q.includes("diclofenac")) {
+    answer.innerHTML = "<h3>Diclofenac</h3><p>Diclofenac is an NSAID used to relieve pain and inflammation.</p>";
+}
+else if (q.includes("antacid")) {
+    answer.innerHTML = "<h3>Antacids</h3><p>Antacids neutralize gastric hydrochloric acid and provide relief from acidity.</p>";
+}
+else if (q.includes("pharmacology")) {
+    answer.innerHTML = "<h3>Pharmacology</h3><p>Pharmacology is the study of drugs, their actions, uses and effects on living organisms.</p>";
+}
+else if (q.includes("pharmacokinetics")) {
+    answer.innerHTML = "<h3>Pharmacokinetics</h3><p>Pharmacokinetics describes what the body does to a drug: Absorption, Distribution, Metabolism and Excretion (ADME).</p>";
+}
+else if (q.includes("pharmacodynamics")) {
+    answer.innerHTML = "<h3>Pharmacodynamics</h3><p>Pharmacodynamics is the study of what a drug does to the body, including its mechanisms and effects.</p>";
+} else {
+        answer.innerHTML = "<p>Sorry! Is question ka answer abhi database mein available nahi hai. Please try Paracetamol, Aspirin, Antibiotics or BMI.</p>";
+    }
+}</script>
 </body>
 </html>'''
 # Remove an accidental redundant malformed function line before saving

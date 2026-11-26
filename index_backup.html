@@ -1,0 +1,454 @@
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJdGbpQ9pmc58o" /><meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJ
+  <meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJdGbpQ9pmc58o" />
+  <meta name="google-site-verification" content="582jlNE1Cd4c_WtMsxKgGU4BpgoKqzJdGbpQ9pmc58o" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PharmaCalc | Pharmacy Student Toolkit</title>
+<style>
+:root{
+  --navy:#183153; --blue:#245b91; --light:#f3f6fa; --white:#fff;
+  --text:#263445; --muted:#66758a; --border:#dce4ee; --gold:#d6a84f;
+  --shadow:0 4px 16px rgba(25,49,83,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:var(--text)}
+.topbar{height:64px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:5;box-shadow:var(--shadow)}
+.brand{font-size:21px;font-weight:700;letter-spacing:.3px}.brand span{color:#f0c66e}
+.top-actions{display:flex;gap:10px;align-items:center}
+.top-actions button{background:#29496e;color:white;border:1px solid #55708e;padding:9px 12px;border-radius:7px;cursor:pointer}
+.layout{display:flex;min-height:calc(100vh - 64px)}
+.sidebar{width:245px;background:#fff;border-right:1px solid var(--border);padding:18px 12px;flex-shrink:0}
+.sidebar-title{font-size:11px;color:var(--muted);font-weight:bold;letter-spacing:1.2px;padding:10px 12px}
+.sidebar button{width:100%;text-align:left;border:0;background:transparent;color:#34465c;padding:12px;border-radius:8px;margin:2px 0;cursor:pointer;font-size:14px}
+.sidebar button:hover,.sidebar button.active{background:#eaf1f8;color:var(--navy);font-weight:bold}
+.main{flex:1;padding:28px;max-width:1500px;margin:auto;width:100%}
+.page-title{margin:0 0 6px;color:var(--navy);font-size:27px}
+.subtitle{color:var(--muted);margin:0 0 22px}
+.welcome{background:linear-gradient(115deg,#183153,#2d679b);color:#fff;padding:25px;border-radius:13px;margin-bottom:22px;box-shadow:var(--shadow)}
+.welcome h2{margin:0 0 8px}.welcome p{margin:0;color:#e5edf6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:16px 0 24px}
+.card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:19px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px;color:var(--navy);font-size:16px}
+.stat{font-size:30px;font-weight:700;color:var(--blue);margin:7px 0}
+.card p{color:var(--muted);font-size:13px;margin:5px 0}
+.section-heading{font-size:19px;color:var(--navy);margin:24px 0 12px}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.quick{background:#fff;border:1px solid var(--border);border-radius:10px;padding:15px;text-align:left;cursor:pointer;color:var(--navy);font-weight:bold}
+.quick:hover{border-color:#8aa9c9;background:#f8fbff}
+label{display:block;font-weight:bold;font-size:13px;margin:14px 0 6px;color:#40536a}
+input,select{width:100%;padding:11px;border:1px solid #cbd6e2;border-radius:7px;font-size:14px;background:#fff}
+.primary-btn{border:0;background:var(--blue);color:#fff;padding:11px 17px;border-radius:7px;margin-top:16px;cursor:pointer;font-weight:bold}
+.primary-btn:hover{background:var(--navy)}
+.secondary-btn{border:1px solid var(--border);background:#fff;color:var(--navy);padding:9px 13px;border-radius:7px;cursor:pointer}
+.result{margin-top:16px;padding:13px;background:#edf5fc;border-left:4px solid var(--blue);border-radius:6px;font-weight:bold;overflow-wrap:anywhere}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:11px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+th{background:#edf2f7;color:var(--navy)}
+.notice{background:#fff8e8;border:1px solid #f0d99f;padding:12px;border-radius:8px;color:#765b20;font-size:13px;margin-top:18px}
+.history-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.history-item:last-child{border-bottom:0}
+.footer{text-align:center;color:#8793a2;font-size:12px;padding:24px}
+.empty{padding:18px;color:var(--muted);background:#fff;border:1px dashed var(--border);border-radius:8px}
+body.dark{--light:#111c2a;--white:#1c2b3d;--text:#e5edf6;--muted:#a8b6c8;--border:#34465c;--navy:#10243b;--blue:#477fb6;background:var(--light);color:var(--text)}
+body.dark .sidebar,body.dark .card,body.dark .quick,body.dark input,body.dark select,body.dark table,body.dark .secondary-btn{background:#1c2b3d;color:var(--text);border-color:var(--border)}
+body.dark .sidebar button{color:#dce6f1}body.dark .sidebar button:hover,body.dark .sidebar button.active{background:#2a4059}
+body.dark .page-title,body.dark .section-heading,body.dark .card h3{color:#dceaff}
+body.dark th{background:#263b53;color:#fff}body.dark .result{background:#233c55}
+@media(max-width:760px){.layout{display:block}.sidebar{width:100%;display:grid;grid-template-columns:repeat(2,1fr);padding:8px}.sidebar-title{grid-column:1/-1}.main{padding:17px}.topbar{padding:0 12px}.brand{font-size:17px}}
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media screen and (max-width: 768px) {
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px;
+    }
+
+    .sidebar button {
+        width: 100%;
+        margin: 4px 0;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    #content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input, select, textarea {
+        width: 100% !important;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    button {
+        max-width: 100%;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+}</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">💊 Pharma<span>Calc</span></div>
+  <div class="top-actions">
+    <button onclick="toggleTheme()">☀️ / 🌙 Theme</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">MAIN MENU</div>
+    <button class="active" onclick="showHome()">🏠 Dashboard</button>
+    <button onclick="showCalculator('bmi')">⚖️ BMI Calculator</button>
+    <button onclick="showCalculator('molarity')">🧪 Molarity</button>
+    <button onclick="showCalculator('normality')">⚗️ Normality</button>
+    <button onclick="showCalculator('dilution')">💧 Dilution</button>
+    <button onclick="showCalculator('ph')">🧬 pH Calculator</button>
+    <button onclick="showCalculator('percentage')">📊 Percentage w/v</button>
+    <button onclick="showAlligation()">⚖️ Alligation Calculator</button>
+    <div class="sidebar-title">PHARMACY TOOLS</div>
+    <button onclick="showDrugInfo()">💊 Drug Information</button>
+    
+<button onclick="showHistory()">🕘 Calculation History</button>
+<button onclick="showAI()">🤖 AI Pharmacy Assistant</button>
+<button onclick="showAbout()">ℹ️ About PharmaCalc</button>
+  </aside>
+
+  <main class="main" id="content"></main>
+</div>
+<div class="footer">Developed by Aadil Shaikh · B.Pharmacy Student | Learn • Innovate • Discover</div>
+
+<script>
+const HISTORY_KEY = "pharmaCalcHistory";
+const drugDatabase = [
+ {name:"Paracetamol",category:"Analgesic / Antipyretic",use:"Relief of mild to moderate pain and fever.",note:"Use only as directed. Excessive doses can cause serious liver damage."},
+ {name:"Ibuprofen",category:"NSAID",use:"Pain, inflammation and fever.",note:"May irritate the stomach and may not be suitable for everyone."},
+ {name:"Amoxicillin",category:"Antibiotic",use:"Treatment of certain bacterial infections.",note:"Prescription antibiotic. Not effective against viral infections."},
+ {name:"Cetirizine",category:"Antihistamine",use:"Allergy symptoms such as sneezing and itching.",note:"May cause drowsiness in some people."},
+ {name:"Omeprazole",category:"Proton pump inhibitor",use:"Reduces stomach acid.",note:"Use according to the product label or prescriber's advice."},
+ {name:"Metformin",category:"Antidiabetic",use:"Helps control blood glucose in type 2 diabetes.",note:"Prescription medicine; kidney function may need monitoring."},
+ {name:"Amlodipine",category:"Calcium channel blocker",use:"Used to manage high blood pressure and angina.",note:"Prescription medicine; may cause ankle swelling."},
+ {name:"Azithromycin",category:"Antibiotic",use:"Treats certain bacterial infections.",note:"Prescription antibiotic; use only when prescribed."},
+ {name:"ORS",category:"Oral rehydration salts",use:"Helps replace water and electrolytes lost during diarrhoea.",note:"Prepare exactly as directed on the sachet."},
+ {name:"Loratadine",category:"Antihistamine",use:"Relief of allergy symptoms.",note:"Follow label directions."},
+ {name:"Salbutamol",category:"Bronchodilator",use:"Relieves bronchospasm in conditions such as asthma.",note:"Use inhaler technique and prescribed instructions."},
+ {name:"Calcium carbonate",category:"Antacid / Supplement",use:"Used as an antacid and calcium supplement.",note:"May interact with other medicines."}
+,
+{name:"Paracetamol",category:"Analgesic / Antipyretic",use:"Relief of pain and fever.",note:"Excessive doses can cause liver damage."},
+{name:"Ibuprofen",category:"NSAID",use:"Relief of pain, inflammation and fever.",note:"May cause stomach irritation."},
+{name:"Aspirin",category:"NSAID / Antiplatelet",use:"Pain relief and prevention of platelet aggregation in selected patients.",note:"May increase bleeding risk."},
+{name:"Diclofenac",category:"NSAID",use:"Relief of pain and inflammation.",note:"May cause gastrointestinal and cardiovascular adverse effects."},
+{name:"Naproxen",category:"NSAID",use:"Used for pain and inflammation.",note:"May cause stomach irritation."},
+{name:"Aceclofenac",category:"NSAID",use:"Used for pain and inflammation.",note:"Use according to prescription."},
+{name:"Tramadol",category:"Opioid Analgesic",use:"Treatment of certain types of moderate to severe pain.",note:"Prescription medicine with dependence and sedation risks."},
+{name:"Mefenamic acid",category:"NSAID",use:"Used for certain types of pain.",note:"May cause gastrointestinal side effects."},
+{name:"Drotaverine",category:"Antispasmodic",use:"Relief of smooth muscle spasms.",note:"Use according to medical advice."},
+{name:"Pantoprazole",category:"Proton Pump Inhibitor",use:"Reduces gastric acid secretion.",note:"Follow prescribed instructions."},
+{name:"Rabeprazole",category:"Proton Pump Inhibitor",use:"Reduces stomach acid.",note:"Follow prescribed instructions."},
+{name:"Famotidine",category:"H2 Receptor Blocker",use:"Reduces stomach acid production.",note:"Dose may depend on kidney function."},
+{name:"Ranitidine",category:"H2 Receptor Blocker",use:"Historically used to reduce stomach acid.",note:"Availability and regulatory status vary by country."},
+{name:"Domperidone",category:"Prokinetic",use:"Used for certain nausea and vomiting conditions.",note:"May affect heart rhythm."},
+{name:"Ondansetron",category:"Antiemetic",use:"Prevention and treatment of nausea and vomiting.",note:"May affect heart rhythm."},
+{name:"Metoclopramide",category:"Antiemetic",use:"Used for nausea and certain gastric motility problems.",note:"May cause movement-related adverse effects."},
+{name:"Loperamide",category:"Antidiarrheal",use:"Helps control certain types of diarrhoea.",note:"Not suitable for every cause of diarrhoea."},
+{name:"Lactulose",category:"Laxative",use:"Treatment of constipation.",note:"May cause bloating and gas."},
+{name:"Bisacodyl",category:"Stimulant Laxative",use:"Relief of constipation.",note:"Avoid prolonged unsupervised use."},
+{name:"Senna",category:"Stimulant Laxative",use:"Short-term relief of constipation.",note:"May cause abdominal cramps."},
+{name:"Magnesium hydroxide",category:"Antacid / Laxative",use:"Used for acidity and constipation.",note:"May not be suitable in kidney disease."},
+{name:"Aluminium hydroxide",category:"Antacid",use:"Neutralizes stomach acid.",note:"May cause constipation."},
+{name:"Furosemide",category:"Loop Diuretic",use:"Helps remove excess fluid from the body.",note:"Electrolytes and kidney function may need monitoring."},
+{name:"Hydrochlorothiazide",category:"Thiazide Diuretic",use:"Used in management of hypertension and fluid retention.",note:"May affect electrolyte levels."},
+{name:"Spironolactone",category:"Potassium-Sparing Diuretic",use:"Used for fluid retention and certain heart conditions.",note:"May increase potassium levels."},
+{name:"Losartan",category:"ARB",use:"Used to manage high blood pressure.",note:"May affect potassium and kidney function."},
+{name:"Telmisartan",category:"ARB",use:"Used to manage hypertension.",note:"Prescription medicine."},
+{name:"Olmesartan",category:"ARB",use:"Used to manage high blood pressure.",note:"Prescription medicine."},
+{name:"Enalapril",category:"ACE Inhibitor",use:"Used for hypertension and certain heart conditions.",note:"May cause cough or increased potassium."},
+{name:"Ramipril",category:"ACE Inhibitor",use:"Used for hypertension and cardiovascular conditions.",note:"May affect kidney function and potassium."},
+{name:"Atenolol",category:"Beta Blocker",use:"Used for hypertension and certain heart conditions.",note:"May reduce heart rate."},
+{name:"Metoprolol",category:"Beta Blocker",use:"Used for hypertension and heart conditions.",note:"Do not stop suddenly without medical advice."},
+{name:"Propranolol",category:"Beta Blocker",use:"Used for selected cardiovascular and neurological conditions.",note:"May not be suitable for some asthma patients."},
+{name:"Carvedilol",category:"Beta Blocker",use:"Used in certain heart conditions and hypertension.",note:"May lower blood pressure and heart rate."},
+{name:"Clopidogrel",category:"Antiplatelet",use:"Helps prevent blood clot formation.",note:"May increase bleeding risk."},
+{name:"Warfarin",category:"Anticoagulant",use:"Prevention and treatment of blood clots.",note:"Requires INR monitoring."},
+{name:"Atorvastatin",category:"Statin",use:"Reduces cholesterol levels.",note:"Report unexplained muscle pain to a healthcare professional."},
+{name:"Rosuvastatin",category:"Statin",use:"Used to reduce cholesterol.",note:"Prescription medicine."},
+{name:"Ezetimibe",category:"Cholesterol Absorption Inhibitor",use:"Reduces intestinal cholesterol absorption.",note:"May be used with other cholesterol medicines."},
+{name:"Glibenclamide",category:"Sulfonylurea",use:"Helps control blood glucose in type 2 diabetes.",note:"May cause low blood glucose."},
+{name:"Glimepiride",category:"Sulfonylurea",use:"Used in type 2 diabetes.",note:"May cause hypoglycaemia."},
+{name:"Gliclazide",category:"Sulfonylurea",use:"Helps control blood glucose.",note:"May cause low blood glucose."},
+{name:"Sitagliptin",category:"DPP-4 Inhibitor",use:"Used in management of type 2 diabetes.",note:"Prescription medicine."},
+{name:"Vildagliptin",category:"DPP-4 Inhibitor",use:"Helps control blood glucose in type 2 diabetes.",note:"Liver function monitoring may be required."},
+{name:"Empagliflozin",category:"SGLT2 Inhibitor",use:"Used in type 2 diabetes and selected heart conditions.",note:"May increase risk of genital infections and dehydration."},
+{name:"Dapagliflozin",category:"SGLT2 Inhibitor",use:"Used in type 2 diabetes and selected heart and kidney conditions.",note:"Prescription medicine."},
+{name:"Pioglitazone",category:"Thiazolidinedione",use:"Improves insulin sensitivity in type 2 diabetes.",note:"May cause fluid retention."},
+{name:"Insulin",category:"Hormone / Antidiabetic",use:"Helps control blood glucose.",note:"Requires careful storage and prescribed administration."},
+{name:"Levothyroxine",category:"Thyroid Hormone",use:"Replacement therapy for hypothyroidism.",note:"Requires appropriate thyroid monitoring."},
+{name:"Carbimazole",category:"Antithyroid",use:"Used to treat hyperthyroidism.",note:"Report fever or sore throat promptly."},
+{name:"Prednisolone",category:"Corticosteroid",use:"Reduces inflammation and immune activity.",note:"Long-term use requires medical supervision."},
+{name:"Dexamethasone",category:"Corticosteroid",use:"Used for selected inflammatory and allergic conditions.",note:"May cause increased blood glucose."},
+{name:"Hydrocortisone",category:"Corticosteroid",use:"Used for inflammatory conditions and certain hormone deficiencies.",note:"Use as prescribed."},
+{name:"Montelukast",category:"Leukotriene Receptor Antagonist",use:"Used in selected asthma and allergy conditions.",note:"May cause mood or behaviour changes."},
+{name:"Budesonide",category:"Corticosteroid",use:"Reduces airway or intestinal inflammation depending on formulation.",note:"Rinse mouth after inhaled use."},
+{name:"Fluticasone",category:"Corticosteroid",use:"Used for allergic rhinitis and certain respiratory conditions.",note:"Follow formulation-specific instructions."},
+{name:"Fexofenadine",category:"Antihistamine",use:"Relief of allergy symptoms.",note:"Follow product instructions."},
+{name:"Chlorpheniramine",category:"Antihistamine",use:"Relief of allergic symptoms.",note:"May cause drowsiness."},
+{name:"Diphenhydramine",category:"Antihistamine",use:"Used for selected allergic symptoms.",note:"May cause significant drowsiness."},
+{name:"Amoxicillin + Clavulanic acid",category:"Combination Antibiotic",use:"Treats certain bacterial infections.",note:"Prescription medicine; may cause diarrhoea."},
+{name:"Cefixime",category:"Cephalosporin Antibiotic",use:"Treats certain bacterial infections.",note:"Use only when prescribed."},
+{name:"Cefuroxime",category:"Cephalosporin Antibiotic",use:"Treats certain bacterial infections.",note:"Prescription antibiotic."},
+{name:"Ceftriaxone",category:"Cephalosporin Antibiotic",use:"Treats various bacterial infections.",note:"Usually administered by healthcare professionals."},
+{name:"Cefpodoxime",category:"Cephalosporin Antibiotic",use:"Treats certain bacterial infections.",note:"Prescription antibiotic."},
+{name:"Doxycycline",category:"Tetracycline Antibiotic",use:"Treats selected bacterial infections.",note:"May cause photosensitivity."},
+{name:"Tetracycline",category:"Tetracycline Antibiotic",use:"Treats selected bacterial infections.",note:"Can interact with minerals and dairy products."},
+{name:"Clarithromycin",category:"Macrolide Antibiotic",use:"Treats certain bacterial infections.",note:"May interact with other medicines."},
+{name:"Ciprofloxacin",category:"Fluoroquinolone Antibiotic",use:"Treats selected bacterial infections.",note:"May cause serious tendon and nerve adverse effects."},
+{name:"Levofloxacin",category:"Fluoroquinolone Antibiotic",use:"Treats selected bacterial infections.",note:"Prescription medicine with important safety warnings."},
+{name:"Metronidazole",category:"Nitroimidazole Antimicrobial",use:"Treats certain anaerobic bacterial and protozoal infections.",note:"Follow medical advice regarding alcohol and interactions."},
+{name:"Tinidazole",category:"Nitroimidazole Antimicrobial",use:"Treats selected protozoal and anaerobic infections.",note:"Use only as prescribed."},
+{name:"Fluconazole",category:"Antifungal",use:"Treats selected fungal infections.",note:"May interact with other medicines."},
+{name:"Itraconazole",category:"Antifungal",use:"Treats selected fungal infections.",note:"May affect liver function and interact with medicines."},
+{name:"Clotrimazole",category:"Antifungal",use:"Treats certain fungal skin and mucosal infections.",note:"Follow formulation-specific instructions."},
+{name:"Terbinafine",category:"Antifungal",use:"Treats certain fungal infections.",note:"Oral treatment may require liver monitoring."},
+{name:"Acyclovir",category:"Antiviral",use:"Treats infections caused by certain herpes viruses.",note:"Does not eliminate the virus from the body."},
+{name:"Valacyclovir",category:"Antiviral",use:"Treats selected herpes virus infections.",note:"Requires appropriate medical advice."},
+{name:"Oseltamivir",category:"Antiviral",use:"Used for treatment or prevention of influenza in selected cases.",note:"Works best when started early."},
+{name:"Iron supplements",category:"Haematinic",use:"Prevention and treatment of iron deficiency.",note:"May cause constipation and dark stools."},
+{name:"Folic acid",category:"Vitamin B9",use:"Prevention and treatment of folate deficiency.",note:"Appropriate use depends on the cause of anaemia."},
+{name:"Vitamin B12",category:"Vitamin Supplement",use:"Prevention and treatment of vitamin B12 deficiency.",note:"Form and route depend on clinical need."},
+{name:"Vitamin D3",category:"Vitamin Supplement",use:"Prevention and treatment of vitamin D deficiency.",note:"Excessive intake can be harmful."},
+{name:"Vitamin C",category:"Vitamin Supplement",use:"Prevention and treatment of vitamin C deficiency.",note:"High doses may cause gastrointestinal discomfort."},
+{name:"Vitamin B Complex",category:"Vitamin Supplement",use:"Provides several B-group vitamins.",note:"Use according to nutritional needs."},
+{name:"Zinc sulfate",category:"Mineral Supplement",use:"Prevention and treatment of zinc deficiency.",note:"May cause nausea."},
+{name:"Potassium chloride",category:"Electrolyte Supplement",use:"Prevention and treatment of low potassium.",note:"Requires careful monitoring of potassium levels."},
+{name:"Sodium bicarbonate",category:"Alkalinizing Agent / Antacid",use:"Used in selected acid-base conditions and as an antacid.",note:"Excess sodium may be harmful in some conditions."},
+{name:"Lidocaine",category:"Local Anaesthetic",use:"Produces local anaesthesia.",note:"Excessive exposure can cause toxicity."},
+{name:"Benzocaine",category:"Local Anaesthetic",use:"Provides local surface anaesthesia.",note:"Rarely may cause methemoglobinemia."},
+{name:"Chlorhexidine",category:"Antiseptic",use:"Used for skin and oral antisepsis.",note:"Use the correct formulation."},
+{name:"Povidone iodine",category:"Antiseptic",use:"Used for skin antisepsis.",note:"Avoid inappropriate use in people with certain thyroid conditions."},
+{name:"Silver sulfadiazine",category:"Topical Antimicrobial",use:"Used in selected burn wound care.",note:"Use under healthcare professional guidance."}];
+
+function getHistory(){try{return JSON.parse(localStorage.getItem(HISTORY_KEY))||[]}catch(e){return []}}
+function saveHistory(item){let h=getHistory();h.unshift({name:item, date:new Date().toLocaleString()});localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(0,100)))}
+function setActive(buttonText){document.querySelectorAll(".sidebar button").forEach(b=>b.classList.toggle("active",b.textContent.includes(buttonText)))}
+function showHome(){
+ setActive("Dashboard");
+ const h=getHistory();
+ const recent=h.slice(0,5);
+ document.getElementById("content").innerHTML=`
+ <div class="welcome"><h2>Welcome to PharmaCalc 👋</h2><p>Your pharmacy calculation and learning toolkit.</p></div>
+ <h1 class="page-title">Dashboard</h1><p class="subtitle">Quick overview of your pharmacy tools and activity.</p>
+ <div class="grid">
+  <div class="card"><h3>🧮 Total Calculations</h3><div class="stat">${h.length}</div><p>Saved calculation records</p></div>
+  <div class="card"><h3>💊 Drug Database</h3><div class="stat">${drugDatabase.length}</div><p>Medicines in this demo database</p></div>
+  <div class="card"><h3>🧪 Calculators</h3><div class="stat">7</div><p>Pharmacy and health calculators</p></div>
+  <div class="card"><h3>📚 Learning</h3><div class="stat">24/7</div><p>Learn pharmacy concepts</p></div>
+ </div>
+ <h2 class="section-heading">Quick Access</h2>
+ <div class="quick-grid">
+  <button class="quick" onclick="showCalculator('bmi')">⚖️ BMI Calculator</button>
+  <button class="quick" onclick="showCalculator('molarity')">🧪 Molarity</button>
+  <button class="quick" onclick="showCalculator('normality')">⚗️ Normality</button>
+  <button class="quick" onclick="showCalculator('dilution')">💧 Dilution</button>
+  <button class="quick" onclick="showCalculator('ph')">🧬 pH Calculator</button>
+  <button class="quick" onclick="showCalculator('percentage')">📊 Percentage w/v</button>
+  <button class="quick" onclick="showAlligation()">⚖️ Alligation</button>
+  <button class="quick" onclick="showDrugInfo()">💊 Drug Information</button>
+ </div>
+ <h2 class="section-heading">🕘 Recent History</h2>
+ ${recent.length?recent.map(x=>`<div class="card history-item"><b>${escapeHTML(x.name)}</b><p>${escapeHTML(x.date)}</p></div>`).join(""):'<div class="empty">No calculations yet. Use any calculator to create your first record.</div>'}
+ <div class="notice">Educational use only. This app is not a substitute for professional medical advice or a pharmacist's clinical judgement.</div>`;
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showCalculator(type){
+ const configs={
+ bmi:{title:"BMI Calculator",fields:`<label>Weight (kg)</label><input type="number" id="weight" min="0" step="any"><label>Height (cm)</label><input type="number" id="height" min="0" step="any">`,fn:"calculateBMI"},
+ molarity:{title:"Molarity Calculator",fields:`<label>Moles of solute (mol)</label><input type="number" id="moles" step="any"><label>Volume of solution (L)</label><input type="number" id="volume" step="any">`,fn:"calculateMolarity"},
+ normality:{title:"Normality Calculator",fields:`<label>Number of equivalents (eq)</label><input type="number" id="equivalents" step="any"><label>Volume of solution (L)</label><input type="number" id="volume" step="any">`,fn:"calculateNormality"},
+ dilution:{title:"Dilution Calculator",fields:`<label>Initial concentration (C1)</label><input type="number" id="c1" step="any"><label>Initial volume (V1)</label><input type="number" id="v1" step="any"><label>Final volume (V2)</label><input type="number" id="v2" step="any"><p>Use the same volume units for V1 and V2.</p>`,fn:"calculateDilution"},
+ ph:{title:"pH Calculator",fields:`<label>Hydrogen ion concentration [H+] (mol/L)</label><input type="number" id="hplus" min="0" step="any">`,fn:"calculatePH"},
+ percentage:{title:"Percentage w/v Calculator",fields:`<label>Weight of solute (g)</label><input type="number" id="grams" step="any"><label>Volume of solution (mL)</label><input type="number" id="ml" step="any">`,fn:"calculatePercentage"}
+ };
+ const c=configs[type]; if(!c)return;
+ setActive(c.title.split(" ")[0]);
+ document.getElementById("content").innerHTML=`<h1 class="page-title">${c.title}</h1><p class="subtitle">Enter the required values and select Calculate.</p><div class="card" style="max-width:650px">${c.fields}<button class="primary-btn" onclick="${c.fn}()">Calculate</button><div id="result"></div></div>`;
+}
+function val(id){return Number(document.getElementById(id).value)}
+function showResult(text){document.getElementById("result").innerHTML=`<div class="result">${text}</div>`}
+function calculateBMI(){let w=val("weight"),h=val("height")/100;if(!(w>0&&h>0))return showResult("Please enter valid positive values.");let bmi=w/(h*h);let category=bmi<18.5?"Underweight":bmi<25?"Normal range":bmi<30?"Overweight":"Obesity range";let out=`BMI: ${bmi.toFixed(2)} (${category})`;saveHistory(out);showResult(out)}
+function calculateMolarity(){let n=val("moles"),v=val("volume);".slice(0,-1));}
+function calculateMolarity(){let n=val("moles"),v=val("volume");if(!(n>=0&&v>0))return showResult("Enter valid moles and volume greater than zero.");let r=`Molarity = ${(n/v).toFixed(4)} mol/L`;saveHistory(r);showResult(r)}
+function calculateNormality(){let e=val("equivalents"),v=val("volume");if(!(e>=0&&v>0))return showResult("Enter valid equivalents and volume greater than zero.");let r=`Normality = ${(e/v).toFixed(4)} N`;saveHistory(r);showResult(r)}
+function calculateDilution(){let c1=val("c1"),v1=val("v1"),v2=val("v2");if(!(c1>=0&&v1>=0&&v2>0))return showResult("Enter valid values; final volume must be greater than zero.");let c2=(c1*v1)/v2;let r=`Final concentration (C2) = ${c2.toFixed(4)}`;saveHistory(r);showResult(r)}
+function calculatePH(){let h=val("hplus");if(!(h>0))return showResult("Hydrogen ion concentration must be greater than zero.");let p=-Math.log10(h);let r=`pH = ${p.toFixed(3)}`;saveHistory(r);showResult(r)}
+function calculatePercentage(){let g=val("grams"),ml=val("ml");if(!(g>=0&&ml>0))return showResult("Enter valid weight and volume greater than zero.");let p=g/ml*100;let r=`Percentage strength = ${p.toFixed(3)}% w/v`;saveHistory(r);showResult(r)}
+function showAlligation(){setActive("Alligation");document.getElementById("content").innerHTML=`<h1 class="page-title">⚖️ Alligation Calculator</h1><p class="subtitle">Calculate the mixing ratio of two strengths.</p><div class="card" style="max-width:650px"><label>Higher strength (%)</label><input id="high" type="number" step="any"><label>Lower strength (%)</label><input id="low" type="number" step="any"><label>Required strength (%)</label><input id="target" type="number" step="any"><label>Total quantity (g or mL)</label><input id="qty" type="number" step="any"><button class="primary-btn" onclick="calculateAlligation()">Calculate</button><div id="result"></div></div>`}
+function calculateAlligation(){let hi=val("high"),lo=val("low"),t=val("target"),q=val("qty");if(!(hi>lo&&t>lo&&t<hi&&q>0))return showResult("Required strength must be between lower and higher strengths; quantity must be positive.");let highParts=t-lo,lowParts=hi-t,total=highParts+lowParts;let highQty=q*highParts/total,lowQty=q*lowParts/total;let r=`Ratio (higher : lower) = ${highParts}:${lowParts}<br>Higher strength quantity = ${highQty.toFixed(3)}<br>Lower strength quantity = ${lowQty.toFixed(3)}`;saveHistory(`Alligation: ${r.replace(/<br>/g,"; ")}`);showResult(r)}
+function showDrugInfo(){setActive("Drug Information");document.getElementById("content").innerHTML=`<h1 class="page-title">💊 Drug Information</h1><p class="subtitle">Search the educational sample medicine database.</p><div class="card"><label>Search medicine</label><input id="drugSearch" placeholder="Type medicine name or category..." oninput="renderDrugs()"><div id="drugResults"></div></div><div class="notice">This is general educational information, not prescribing guidance. Always verify medicines using an authoritative reference and consult a qualified professional.</div>`;renderDrugs()}
+function renderDrugs(){let q=(document.getElementById("drugSearch").value||"").toLowerCase();let list=drugDatabase.filter(d=>(d.name+" "+d.category+" "+d.use).toLowerCase().includes(q));document.getElementById("drugResults").innerHTML=list.length?`<div class="table-wrap"><table><thead><tr><th>Medicine</th><th>Category</th><th>Common use</th><th>Note</th></tr></thead><tbody>${list.map(d=>`<tr><td><b>${escapeHTML(d.name)}</b></td><td>${escapeHTML(d.category)}</td><td>${escapeHTML(d.use)}</td><td>${escapeHTML(d.note)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No matching medicine found.</div>'}
+function showHistory(){setActive("History");let h=getHistory();document.getElementById("content").innerHTML=`<h1 class="page-title">🕘 Calculation History</h1><p class="subtitle">Your recent calculations are saved in this browser.</p><div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><b>${h.length} saved records</b><button class="secondary-btn" onclick="clearHistory()">Clear History</button></div><div style="margin-top:12px">${h.length?h.map(x=>`<div class="history-item"><b>${escapeHTML(x.name)}</b><p>${escapeHTML(x.date)}</p></div>`).join(""):'<div class="empty">No calculations saved yet.</div>'}</div></div>`}
+function clearHistory(){if(confirm("Delete all saved calculation history?")){localStorage.removeItem(HISTORY_KEY);showHistory()}}
+function showAbout(){setActive("About");document.getElementById("content").innerHTML=`<h1 class="page-title">About PharmaCalc</h1><div class="card"><h3>PharmaCalc – Pharmacy Student Toolkit</h3><p>An educational application for basic pharmaceutical calculations and introductory drug information.</p><p><b>Developer:</b> Aadil Shaikh</p><p><b>Tagline:</b> Learn • Innovate • Discover</p></div><div class="notice">PharmaCalc is for educational purposes only. It does not provide diagnosis, treatment recommendations, or patient-specific dosing advice.</div>`}
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("pharmaCalcDark",document.body.classList.contains("dark")?"yes":"no")}
+if(localStorage.getItem("pharmaCalcDark")==="yes")document.body.classList.add("dark");
+showHome();
+function showAI() {
+    document.getElementById("content").innerHTML = `
+        <h2>🤖 AI Pharmacy Assistant</h2>
+        <p>Welcome to PharmaCalc Pharmacy Study Assistant!</p>
+
+        <div style="margin-top:20px;">
+            <input type="text" id="aiQuestion"
+            placeholder="Ask a pharmacy question..."
+            style="width:70%; padding:12px;">
+
+            <button onclick="askAI()">Ask Question</button>
+        </div>
+
+        <div id="aiAnswer" style="margin-top:20px;"></div>
+    `;
+}
+function askAI() {
+ 
+    let question = document.getElementById("aiQuestion").value.trim();
+    let answer = document.getElementById("aiAnswer");
+
+    if (question === "") {
+        answer.innerHTML = "Please enter a question.";
+        return;
+    }
+
+    let q = question.toLowerCase();
+
+    if (q.includes("paracetamol")) {
+        answer.innerHTML = "<h3>Paracetamol</h3><p>Paracetamol is an analgesic and antipyretic drug. It reduces pain and fever. It mainly acts by inhibiting prostaglandin synthesis in the central nervous system.</p>";
+    }
+    else if (q.includes("antibiotic")) {
+        answer.innerHTML = "<h3>Antibiotics</h3><p>Antibiotics are medicines used to treat bacterial infections. They act by killing bacteria or inhibiting their growth.</p>";
+    }
+    else if (q.includes("bmi")) {
+        answer.innerHTML = "<h3>BMI</h3><p>BMI = Weight (kg) / Height (m)². It is used to assess body weight relative to height.</p>";
+    }
+    else if (q.includes("aspirin")) {
+        answer.innerHTML = "<h3>Aspirin</h3><p>Aspirin is an NSAID. It inhibits cyclooxygenase (COX) enzymes and reduces prostaglandin synthesis. It also inhibits platelet aggregation.</p>";
+    }
+   else if (q.includes("ibuprofen")) {
+    answer.innerHTML = "<h3>Ibuprofen</h3><p>Ibuprofen is an NSAID. It inhibits COX enzymes and reduces pain, inflammation and fever.</p>";
+}
+else if (q.includes("amoxicillin")) {
+    answer.innerHTML = "<h3>Amoxicillin</h3><p>Amoxicillin is a beta-lactam antibiotic. It inhibits bacterial cell wall synthesis.</p>";
+}
+else if (q.includes("metformin")) {
+    answer.innerHTML = "<h3>Metformin</h3><p>Metformin is an antidiabetic drug. It mainly reduces glucose production in the liver.</p>";
+}
+else if (q.includes("omeprazole")) {
+    answer.innerHTML = "<h3>Omeprazole</h3><p>Omeprazole is a proton pump inhibitor (PPI). It reduces gastric acid secretion.</p>";
+}
+else if (q.includes("cetirizine")) {
+    answer.innerHTML = "<h3>Cetirizine</h3><p>Cetirizine is an antihistamine used to relieve allergy symptoms.</p>";
+}
+else if (q.includes("diclofenac")) {
+    answer.innerHTML = "<h3>Diclofenac</h3><p>Diclofenac is an NSAID used to relieve pain and inflammation.</p>";
+}
+else if (q.includes("antacid")) {
+    answer.innerHTML = "<h3>Antacids</h3><p>Antacids neutralize gastric hydrochloric acid and provide relief from acidity.</p>";
+}
+else if (q.includes("pharmacology")) {
+    answer.innerHTML = "<h3>Pharmacology</h3><p>Pharmacology is the study of drugs, their actions, uses and effects on living organisms.</p>";
+}
+else if (q.includes("pharmacokinetics")) {
+    answer.innerHTML = "<h3>Pharmacokinetics</h3><p>Pharmacokinetics describes what the body does to a drug: Absorption, Distribution, Metabolism and Excretion (ADME).</p>";
+}
+else if (q.includes("pharmacodynamics")) {
+    answer.innerHTML = "<h3>Pharmacodynamics</h3><p>Pharmacodynamics is the study of what a drug does to the body, including its mechanisms and effects.</p>";
+}else if (q.includes("bioavailability")) {
+    answer.innerHTML = "<h3>Bioavailability</h3><p>Bioavailability is the fraction of an administered drug dose that reaches systemic circulation in unchanged form.</p>";
+}
+else if (q.includes("half life") || q.includes("half-life")) {
+    answer.innerHTML = "<h3>Drug Half-life</h3><p>Half-life is the time required for the plasma concentration of a drug to decrease by 50%.</p>";
+}
+else if (q.includes("pharmacognosy")) {
+    answer.innerHTML = "<h3>Pharmacognosy</h3><p>Pharmacognosy is the study of medicines obtained from natural sources such as plants, animals and microorganisms.</p>";
+}
+else if (q.includes("microbiology")) {
+    answer.innerHTML = "<h3>Pharmaceutical Microbiology</h3><p>It deals with microorganisms related to pharmaceutical products, including bacteria, fungi and viruses.</p>";
+}
+else if (q.includes("biochemistry")) {
+    answer.innerHTML = "<h3>Biochemistry</h3><p>Biochemistry is the study of chemical processes occurring in living organisms.</p>";
+}
+else if (q.includes("pharmaceutics")) {
+    answer.innerHTML = "<h3>Pharmaceutics</h3><p>Pharmaceutics is the science of converting drugs into suitable dosage forms such as tablets, capsules, syrups and injections.</p>";
+}
+else if (q.includes("tablet")) {
+    answer.innerHTML = "<h3>Tablets</h3><p>Tablets are solid dosage forms containing medicinal substances with or without suitable excipients.</p>";
+}
+else if (q.includes("capsule")) {
+    answer.innerHTML = "<h3>Capsules</h3><p>Capsules are solid dosage forms in which medicines are enclosed in hard or soft shells.</p>";
+}
+else if (q.includes("suspension")) {
+    answer.innerHTML = "<h3>Suspension</h3><p>A suspension is a biphasic liquid dosage form containing insoluble solid particles dispersed in a liquid medium.</p>";
+}
+else if (q.includes("emulsion")) {
+    answer.innerHTML = "<h3>Emulsion</h3><p>An emulsion is a biphasic liquid system consisting of two immiscible liquids, one dispersed in the other.</p>";
+}
+else if (q.includes("sterilization")) {
+    answer.innerHTML = "<h3>Sterilization</h3><p>Sterilization is the process of destroying or removing all forms of microbial life, including bacterial spores.</p>";
+}
+else if (q.includes("adverse drug reaction") || q.includes("adr")) {
+    answer.innerHTML = "<h3>Adverse Drug Reaction</h3><p>An adverse drug reaction is an unwanted and harmful response associated with the use of a medicine.</p>";
+}
+else if (q.includes("antibiotic resistance")) {
+    answer.innerHTML = "<h3>Antibiotic Resistance</h3><p>Antibiotic resistance occurs when bacteria develop the ability to survive exposure to antibiotics that previously inhibited or killed them.</p>";
+}
+else if (q.includes("route of administration") || q.includes("routes of administration")) {
+    answer.innerHTML = "<h3>Routes of Drug Administration</h3><p>Common routes include oral, topical, intravenous, intramuscular, subcutaneous, inhalational and rectal routes.</p>";
+}
+else if (q.includes("first pass")) {
+    answer.innerHTML = "<h3>First-Pass Metabolism</h3><p>First-pass metabolism is the metabolism of a drug in the intestine and liver before it reaches systemic circulation.</p>";
+} else {
+        answer.innerHTML = "<p>Sorry! Is question ka answer abhi database mein available nahi hai. Please try Paracetamol, Aspirin, Antibiotics or BMI.</p>";
+    }
+}</script>
+</body>
+</html>'''
+# Remove an accidental redundant malformed function line before saving
+html = html.replace('function calculateMolarity(){let n=val("moles"),v=val("volume);".slice(0,-1));}\n','')
+path = "/mnt/data/PharmaCalc_complete.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html)
+print(path)
